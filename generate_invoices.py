@@ -46,8 +46,7 @@ def generate_invoice_number() -> str:
     sequence_tracker_file = Path(sequence_tracker_filename)
     if sequence_tracker_file.is_file():
         with open(sequence_tracker_filename) as f:
-            invoice_numbers = [line.rstrip() for line in f]
-            if invoice_numbers:
+            if invoice_numbers := [line.rstrip() for line in f]:
                 latest_invoice_number = sorted(
                     invoice_numbers,
                     key=lambda x: (
@@ -87,17 +86,17 @@ if __name__ == "__main__":
     date_of_sale = current_datetime.strftime(r"%m/%d/%Y")
     # A due date
     due_date = input("Due Date (mm/dd/yyyy): ")
-    user_input = {}
-    for key in [
-        "client_email",
-        "client_name",
-        "client_address",
-        "sale_description",
-        "client_cost",
-        "invoice_number",
-        "date_of_sale",
-        "due_date",
-    ]:
-        user_input[key] = eval(key)
-
+    user_input = {
+        key: eval(key)
+        for key in [
+            "client_email",
+            "client_name",
+            "client_address",
+            "sale_description",
+            "client_cost",
+            "invoice_number",
+            "date_of_sale",
+            "due_date",
+        ]
+    }
     generate_invoce_pdf(**user_input)
